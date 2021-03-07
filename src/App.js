@@ -36,17 +36,16 @@ function App() {
   };
 
   const updateData = (id, data) => {
-    console.log("userData", userData);
-    let update = [...userData];
-    console.log("update Data", update);
-    setTimeout(() => {
-      console.log("update1");
-      let index = update.findIndex((e) => e.id === id);
-      update[index] = data;
+    //console.log("userData", userData);
+    // let update = [...userData];
+    // //console.log("update Data", update);
 
-      setUserData(update);
-      console.log("updateEnd");
-    }, 10000);
+    // let index = update.findIndex((e) => e.id === id);
+    // update[index] = data;
+
+    setUserData((userData) =>
+      userData.map((u) => (u.id === id ? { ...u, ...data } : u))
+    );
   };
 
   const some = (tempFlag) => {

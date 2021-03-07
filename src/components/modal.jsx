@@ -20,7 +20,6 @@ const InputModal = ({ handlePostData, modalIsOpen, setModalOpen }) => {
     email: "",
     phone: "",
     website: "",
-    id: 0,
   });
   const classes = useStyles();
   const handleSubmit = (event) => {
@@ -31,6 +30,7 @@ const InputModal = ({ handlePostData, modalIsOpen, setModalOpen }) => {
     // );
     // data.id = previousLength + 1;
     //console.log("result", data);
+
     handlePostData(userData);
     setModalOpen(false);
   };

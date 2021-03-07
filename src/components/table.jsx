@@ -42,7 +42,7 @@ const BasicTable = ({ passData, deleteData, updateData }) => {
   const classes = useStyles();
   let [id, setId] = useState();
   let [modalFlag, setModalFlag] = useState(false);
-  const handleUpdate = (id) => {
+  const handleUpdate = (id, user) => {
     setId(id);
     setModalFlag(true);
   };
@@ -89,7 +89,7 @@ const BasicTable = ({ passData, deleteData, updateData }) => {
                     style={{ marginRight: 20 }}
                     variant="contained"
                     color="primary"
-                    onClick={() => handleUpdate(user.id)}
+                    onClick={() => handleUpdate(user.id, user)}
                   >
                     Update
                   </Button>
