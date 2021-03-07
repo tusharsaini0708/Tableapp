@@ -1,23 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Button from "@material-ui/core/Button";
+import "./App.css";
+import FinalTable from "./components/table";
+import InputModal from "./components/modal";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function App() {
+  let [userData, setUserData] = useState([]);
+  let [modalFlag, setModalFLag] = useState(false);
+  useEffect(() => {
+    const some = async () => {
+      const { data } = await axios.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setUserData(data);
+    };
+    some();
+  }, []);
+
+  const postData = async (userInputData) => {
+    const { data } = await axios.post(
+      "https://jsonplaceholder.typicode.com/posts",
+      userInputData
+    );
+    // let temp = [...userData];
+    // temp.unshift(data);
+    //console.log("unnessarypostrequest");
+    data.id = userData.length + 1;
+    setUserData([data, ...userData]);
+    //setUserData(temp);
+  };
+
+  const deleteData = (id) => {
+    const tempData = userData.filter((user) => user.id !== id);
+    setUserData(tempData);
+  };
+
+  const updateData = (id, data) => {
+    console.log("userData", userData);
+    let update = [...userData];
+    console.log("update Data", update);
+    setTimeout(() => {
+      console.log("update1");
+      let index = update.findIndex((e) => e.id === id);
+      update[index] = data;
+
+      setUserData(update);
+      console.log("updateEnd");
+    }, 10000);
+  };
+
+  const some = (tempFlag) => {
+    setModalFLag(tempFlag);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => setModalFLag(true)}
+      >
+        ADD ROW
+      </Button>
+      <InputModal
+        handlePostData={postData}
+        modalIsOpen={modalFlag}
+        setModalOpen={some}
+      />
+      <FinalTable
+        passData={userData}
+        updateData={updateData}
+        deleteData={deleteData}
+      />
     </div>
   );
 }
